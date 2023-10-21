@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model_WWI.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model_WWIStoreContainer">
+    <EntitySet Name="CartProducts" EntityType="Model_WWI.Store.CartProducts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Carts" EntityType="Model_WWI.Store.Carts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Customers" EntityType="Model_WWI.Store.Customers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Orders" EntityType="Model_WWI.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Products" EntityType="Model_WWI.Store.Products" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="Model_WWI.Store.Users" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_CartProducts_Carts" Association="Model_WWI.Store.FK_CartProducts_Carts">
+      <End Role="Cart" EntitySet="Carts" />
+      <End Role="CartProduct" EntitySet="CartProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartProducts_Products" Association="Model_WWI.Store.FK_CartProducts_Products">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="CartProduct" EntitySet="CartProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carts_Customers" Association="Model_WWI.Store.FK_Carts_Customers">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Cart" EntitySet="Carts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Customers" Association="Model_WWI.Store.FK_Users_Customers">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CartProducts">
+    <Key>
+      <PropertyRef Name="CartProductId" />
+    </Key>
+    <Property Name="CartProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CartId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Carts">
+    <Key>
+      <PropertyRef Name="CartId" />
+    </Key>
+    <Property Name="CartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Address1" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Address2" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="City" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="State" Type="nvarchar" Nullable="false" MaxLength="2" />
+    <Property Name="ZIPCode" Type="nvarchar" Nullable="false" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="OrderNum" />
+    </Key>
+    <Property Name="OrderNum" Type="int" Nullable="false" />
+    <Property Name="EmpID" Type="int" Nullable="true" />
+    <Property Name="Employee_Name" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Employee_Job_Title" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Sales_Region" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="OrderDate" Type="datetime" Nullable="true" />
+    <Property Name="OrderType" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="CustomerType" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Customer_ID" Type="smallint" Nullable="true" />
+    <Property Name="CustName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="CustState" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="ProdCategory" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="ProdNumber" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="ProdName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Quantity" Type="smallint" Nullable="true" />
+    <Property Name="Price" Type="decimal" Nullable="true" Precision="19" Scale="4" />
+    <Property Name="Discount" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Order_Total" Type="decimal" Nullable="true" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="FullPrice" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="CurrentPrice" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="PercentOff" Type="int" Nullable="false" />
+    <Property Name="ImagePath" Type="nvarchar" Nullable="false" MaxLength="300" />
+    <Property Name="StarRating" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="EmailAddress" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CartProducts_Carts">
+    <End Role="Cart" Type="Model_WWI.Store.Carts" Multiplicity="1" />
+    <End Role="CartProduct" Type="Model_WWI.Store.CartProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cart">
+        <PropertyRef Name="CartId" />
+      </Principal>
+      <Dependent Role="CartProduct">
+        <PropertyRef Name="CartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartProducts_Products">
+    <End Role="Product" Type="Model_WWI.Store.Products" Multiplicity="1" />
+    <End Role="CartProduct" Type="Model_WWI.Store.CartProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="CartProduct">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carts_Customers">
+    <End Role="Customer" Type="Model_WWI.Store.Customers" Multiplicity="0..1" />
+    <End Role="Cart" Type="Model_WWI.Store.Carts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Customers">
+    <End Role="Customer" Type="Model_WWI.Store.Customers" Multiplicity="1" />
+    <End Role="User" Type="Model_WWI.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model_WWI" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model_WWIContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CartProducts" EntityType="Model_WWI.CartProduct" />
+          <EntitySet Name="Carts" EntityType="Model_WWI.Cart" />
+          <EntitySet Name="Customers" EntityType="Model_WWI.Customer" />
+          <EntitySet Name="Orders" EntityType="Model_WWI.Order" />
+          <EntitySet Name="Products" EntityType="Model_WWI.Product" />
+          <EntitySet Name="Users" EntityType="Model_WWI.User" />
+          <AssociationSet Name="FK_CartProducts_Carts" Association="Model_WWI.FK_CartProducts_Carts">
+            <End Role="Cart" EntitySet="Carts" />
+            <End Role="CartProduct" EntitySet="CartProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartProducts_Products" Association="Model_WWI.FK_CartProducts_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="CartProduct" EntitySet="CartProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Carts_Customers" Association="Model_WWI.FK_Carts_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Customers" Association="Model_WWI.FK_Users_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CartProduct">
+          <Key>
+            <PropertyRef Name="CartProductId" />
+          </Key>
+          <Property Name="CartProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CartId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cart" Relationship="Model_WWI.FK_CartProducts_Carts" FromRole="CartProduct" ToRole="Cart" />
+          <NavigationProperty Name="Product" Relationship="Model_WWI.FK_CartProducts_Products" FromRole="CartProduct" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" />
+          <NavigationProperty Name="CartProducts" Relationship="Model_WWI.FK_CartProducts_Carts" FromRole="Cart" ToRole="CartProduct" />
+          <NavigationProperty Name="Customer" Relationship="Model_WWI.FK_Carts_Customers" FromRole="Cart" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="ZIPCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Carts" Relationship="Model_WWI.FK_Carts_Customers" FromRole="Customer" ToRole="Cart" />
+          <NavigationProperty Name="Users" Relationship="Model_WWI.FK_Users_Customers" FromRole="Customer" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderNum" />
+          </Key>
+          <Property Name="OrderNum" Type="Int32" Nullable="false" />
+          <Property Name="EmpID" Type="Int32" />
+          <Property Name="Employee_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_Job_Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sales_Region" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderDate" Type="DateTime" Precision="0" />
+          <Property Name="OrderType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Customer_ID" Type="Int16" />
+          <Property Name="CustName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustState" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProdCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProdNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProdName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int16" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Discount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Total" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FullPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CurrentPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="PercentOff" Type="Int32" Nullable="false" />
+          <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="StarRating" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CartProducts" Relationship="Model_WWI.FK_CartProducts_Products" FromRole="Product" ToRole="CartProduct" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Model_WWI.FK_Users_Customers" FromRole="User" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_CartProducts_Carts">
+          <End Type="Model_WWI.Cart" Role="Cart" Multiplicity="1" />
+          <End Type="Model_WWI.CartProduct" Role="CartProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="CartId" />
+            </Principal>
+            <Dependent Role="CartProduct">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartProducts_Products">
+          <End Type="Model_WWI.Product" Role="Product" Multiplicity="1" />
+          <End Type="Model_WWI.CartProduct" Role="CartProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="CartProduct">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Carts_Customers">
+          <End Type="Model_WWI.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="Model_WWI.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Customers">
+          <End Type="Model_WWI.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="Model_WWI.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model_WWIStoreContainer" CdmEntityContainer="Model_WWIContainer">
+    <EntitySetMapping Name="CartProducts">
+      <EntityTypeMapping TypeName="IsTypeOf(Model_WWI.CartProduct)">
+        <MappingFragment StoreEntitySet="CartProducts">
+          <ScalarProperty Name="CartProductId" ColumnName="CartProductId" />
+          <ScalarProperty Name="CartId" ColumnName="CartId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Carts">
+      <EntityTypeMapping TypeName="IsTypeOf(Model_WWI.Cart)">
+        <MappingFragment StoreEntitySet="Carts">
+          <ScalarProperty Name="CartId" ColumnName="CartId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="IsTypeOf(Model_WWI.Customer)">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="ZIPCode" ColumnName="ZIPCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="IsTypeOf(Model_WWI.Order)">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="OrderNum" ColumnName="OrderNum" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
+          <ScalarProperty Name="Employee_Job_Title" ColumnName="Employee_Job_Title" />
+          <ScalarProperty Name="Sales_Region" ColumnName="Sales_Region" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+          <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+          <ScalarProperty Name="CustName" ColumnName="CustName" />
+          <ScalarProperty Name="CustState" ColumnName="CustState" />
+          <ScalarProperty Name="ProdCategory" ColumnName="ProdCategory" />
+          <ScalarProperty Name="ProdNumber" ColumnName="ProdNumber" />
+          <ScalarProperty Name="ProdName" ColumnName="ProdName" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Order_Total" ColumnName="Order_Total" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="IsTypeOf(Model_WWI.Product)">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="FullPrice" ColumnName="FullPrice" />
+          <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+          <ScalarProperty Name="PercentOff" ColumnName="PercentOff" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="StarRating" ColumnName="StarRating" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(Model_WWI.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
